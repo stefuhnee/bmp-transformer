@@ -2,6 +2,9 @@
 
 module.exports = exports = {};
 
+const buildBitmap = module.exports = function(buffer) {
+  var bitmap = new Bitmap(buffer);
+};
 // Bitmap constructor -- from buffer, break into properties, find palette.
 const Bitmap = module.exports = function(buffer) {
   this.size = buffer.readUInt32LE(2);
