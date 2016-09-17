@@ -1,22 +1,31 @@
 'use strict';
 
+const fileHelper = require('../lib/file-helper');
+
 module.exports = exports = {};
 
-// Transform Constructor
-const Transformer = module.exports = function() { };
+// Runs a transform on the palette
+module.exports = function(filePath, transform, bitmap) {
+  bitmap.palette = new ColorPalette();
+  bitmap.palette['transform'](fileHelper.writeBitmap);
+};
 
-Transformer.prototype.invert = function(callback) {
-  for (var i = 0; i < this.palette.length; i+=4) {
-    let currentHex = this.palette.readUInt32(i);
+// Transform Constructor
+const ColorPalette = function() { };
+
+ColorPalette.prototype.invert = function(callback) {
+  for (var i = 0; i < this.length; i+=4) {
+    let currentHex = this.readUInt32(i);
+    console.log(currentHex);
   }
   callback(this);
   // do inversion
 };
 
-Transformer.prototype.grayscale = function(callback) {
+ColorPalette.prototype.grayscale = function(callback) {
   // do grayscale
 };
 
-Transformer.prototype.randomize = function(callback) {
+ColorPalette.prototype.randomize = function(callback) {
   // do randomize
 };
