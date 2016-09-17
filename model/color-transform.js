@@ -6,10 +6,8 @@ module.exports = exports = {};
 const Transformer = module.exports = function() { };
 
 Transformer.prototype.invert = function(callback) {
-  for (var i = 0; i < this.palette.length; i++) {
-    let currentHex = this.palette.readUInt8(i);
-    currentHex = (255 - currentHex).toString(16);
-    this.palette.writeUInt(currentHex, i);
+  for (var i = 0; i < this.palette.length; i+=4) {
+    let currentHex = this.palette.readUInt32(i);
   }
   callback(this);
   // do inversion
