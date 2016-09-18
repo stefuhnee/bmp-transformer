@@ -6,26 +6,31 @@ module.exports = exports = {};
 
 // Runs a transform on the palette
 module.exports = function(filePath, transform, bitmap) {
-  bitmap.palette = new ColorPalette();
-  bitmap.palette['transform'](fileHelper.writeBitmap);
+  // var palette = bitmap.palette;
+  // bitmap.palette = new ColorPalette;
+  // console.log('bitmap palette', bitmap.palette);
+  exports[transform](bitmap, fileHelper.writeBitmap);
 };
 
 // Transform Constructor
 const ColorPalette = function() { };
 
-ColorPalette.prototype.invert = function(callback) {
-  for (var i = 0; i < this.length; i+=4) {
-    let currentHex = this.readUInt32(i);
-    console.log(currentHex);
+exports.invert = function(bitmap, callback) {
+  console.log('inverting');
+  console.log('palette', bitmap.palette);
+  for (var i = 0; i < bitmap.palette.length; i++) {
+    let currentHex = bitmap.palette[i];
+    currentHex = 255 - currentHex;
   }
-  callback(this);
+  console.log('bitmap palette', bitmap.palette);
+  callback('new', bitmap.wholeBuffer);
   // do inversion
 };
 
-ColorPalette.prototype.grayscale = function(callback) {
+exports.grayscale = function(callback) {
   // do grayscale
 };
 
-ColorPalette.prototype.randomize = function(callback) {
+exports.randomize = function(callback) {
   // do randomize
 };
