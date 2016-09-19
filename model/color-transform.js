@@ -18,8 +18,6 @@ exports.invert = function(bitmap, callback) {
   callback('new', bitmap.wholeBuffer);
 };
 
-// for every RGBA replace it with MMMA, where M = (R+G+B)/3;
-
 exports.grayscale = function(bitmap, callback) {
   for (var i = 0; i < bitmap.palette.length; i+=4) {
     let grayscale = bitmap.palette[i].toString(16);
@@ -30,6 +28,11 @@ exports.grayscale = function(bitmap, callback) {
   callback('new', bitmap.wholeBuffer);
 };
 
-exports.randomize = function(callback) {
-  // do randomize
+exports.randomize = function(bitmap, callback) {
+  for (var i = 0; i < bitmap.palette.length; i++) {
+    let currentHex = (Math.floor(Math.random() * 255) + 1).toString(16);
+    bitmap.palette.writeUIntLE(currentHex, i, 1);
+  }
+  console.log('palette', bitmap.palette);
+  callback('new', bitmap.wholeBuffer);
 };
